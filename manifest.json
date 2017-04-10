@@ -5,9 +5,9 @@
   "description": "This extension uses machine learing to predict the difficulty level of a song",
   "version": "0.1",
   "icons": {
-    "16": "icons/Guitar-icon2.png",
-    "48": "icons/Guitar-icon2.png",
-    "128": "icons/Guitar-icon2.png"
+    "16": "icons/Guitar-icon.png",
+    "48": "icons/Guitar-icon.png",
+    "128": "icons/Guitar-icon.png"
     },
   "content_scripts": [
       {
@@ -18,7 +18,7 @@
     ],
  "web_accessible_resources": ["js/jquery.min.js",  "js/ramda.min.js", "popup.js"],
   "browser_action": {
-    "default_icon": "icons/Guitar-icon2.png",
+    "default_icon": "icons/Guitar-icon.png",
     "default_popup": "popup.html",
     "default_title": "Predict!"
   },
