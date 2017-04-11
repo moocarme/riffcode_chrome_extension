@@ -47,6 +47,8 @@ addScript(chrome.extension.getURL("js/jquery.min.js"), addSecondScript("js/ramda
 
 function getDifficulty(weights) {
     //console.log('tab_info' + tab_info);
+    var div_height = '20px';
+    $('.header').css('padding-top', div_height)
     var $tabContent = $('.js-tab-content').find('span');
     console.log($tabContent[0]);
     var chords = [];
@@ -88,7 +90,9 @@ function getDifficulty(weights) {
                     .css('position', 'fixed')
                     .css('z-index', '999999')
                     .css('background', 'black')
-                    .css('width', '100%');
+                    .css('width', '100%')
+                    .css('font-size', '14pt')
+                    .css('height', div_height);
     });
     console.log(displayText);
 
