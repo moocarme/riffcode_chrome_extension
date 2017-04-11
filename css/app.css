@@ -1,0 +1,7 @@
+.prediction {
+    color: #fc600;
+    position: fixed;
+    z-index: 999999;
+    background: black;
+    width: 100%;
+}

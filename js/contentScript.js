@@ -1,4 +1,32 @@
 console.log('startup');
+function retrieveWindowVariables(variables) {
+    var ret = {};
+
+    var scriptContent = "";
+    for (var i = 0; i < variables.length; i++) {
+        var currVariable = variables[i];
+        scriptContent += "if (typeof " + currVariable + " !== 'undefined') $('body').attr('tmp_" + currVariable + "', " + currVariable + ");\n"
+    }
+
+    var script = document.createElement('script');
+    script.id = 'tmpScript';
+    script.appendChild(document.createTextNode(scriptContent));
+    (document.body || document.head || document.documentElement).appendChild(script);
+
+    for (var i = 0; i < variables.length; i++) {
+        var currVariable = variables[i];
+        ret[currVariable] = $("body").attr("tmp_" + currVariable);
+        $("body").removeAttr("tmp_" + currVariable);
+    }
+
+    $("#tmpScript").remove();
+
+    return ret;
+}
+
+var windowVariables = retrieveWindowVariables(["transpose_to", "tab", "instr"])
+console.log('tab info');
+console.log(windowVariables);
 
 function addScript(scriptURL, onload) {
     var parent_head = document.getElementsByTagName("head")[0];
@@ -18,6 +46,7 @@ addScript(chrome.extension.getURL("js/jquery.min.js"), addSecondScript("js/ramda
 
 
 function getDifficulty(weights) {
+    //console.log('tab_info' + tab_info);
     var $tabContent = $('.js-tab-content').find('span');
     console.log($tabContent[0]);
     var chords = [];
@@ -55,7 +84,7 @@ function getDifficulty(weights) {
     //--- Display results to the user.
     $(document).ready(function(){
         $("#status").text(displayText)
-                    .css('color', 'yellow')
+                    .css('color', '#ffc600')
                     .css('position', 'fixed')
                     .css('z-index', '999999')
                     .css('background', 'black')
@@ -66,7 +95,9 @@ function getDifficulty(weights) {
 }
 
 function getWeights(){
-  var url = 'https://s3.amazonaws.com/chordml-weights/ukulele_chord_weights.json';
+    if(windowVariables.instr == 'ukulele'){
+        var url = 'https://s3.amazonaws.com/chordml-weights/ukulele_chord_weights.json';
+    };
   console.log('fetching ' + url);
   fetchURL(
       url,
